@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Users | User Management</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		
+		<!-- Le styles -->
+	    <link href="./../../assets/css/bootstrap.css" rel="stylesheet">
+		<style>
+		body {
+			padding-top: 60px;
+			/* 60px to make the container go all the way to the bottom of the topbar */
+		}
+		</style>
+		<link href="./../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+		
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		      <script src="../assets/js/html5shiv.js"></script>
+		    <![endif]-->
+		
+		<!-- Fav and touch icons -->
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72"   href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed"                 href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-57-precomposed.png">
+		<link rel="shortcut icon"                                href="http://getbootstrap.com/2.3.2/assets/ico/favicon.png">
+	</head>
+
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="#">User Management</a>
+					<!--.nav-collapse -->
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li><a href="#dashboard">Dashboard</a></li>
+							<li class="active"><a href="#users">Users</a></li>
+							<li><a href="#groups">Groups</a></li>
+						</ul>
+					</div>
+					<!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+	
+		<div class="container">
+			<div class="page-header"></div>
+			
+			<!-- Example row of columns -->
+			<div class="row">
+			  <div class="span10">
+			    <h2>Users</h2>
+			  </div>
+			  <div class="span2">
+			  	<!-- Button to trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">Create user</a>
+			  </div>
+			</div>
+			<div class="row">
+				<div class="span1"></div>
+				<div class="span10">
+					<form class="navbar-form pull-left">
+						<div class="input-append">
+							<input type="text" class="span3">
+							<button class="btn" type="button">Search</button>	
+						</div>
+					</form>
+				</div>
+				<div class="span1"></div>
+			</div>
+			<div class="row">
+				<div class="span1"></div>
+				<div class="span10">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+			                	<th>Name</th>
+				                <th>Username</th>
+				                <th>Email address</th>
+				                <th>Last Session</th>
+							</tr>
+			            </thead>
+			            <tbody>
+			            	<tr>
+			            		<td>1</td>
+			            		<td>Paulo Franca</td>
+			            		<td>paulo</td>
+			            		<td>paulo@gmail.com</td>
+			            		<td>Never logged in</td>
+			            	</tr>
+			            	<tr>
+			            		<td>2</td>
+			            		<td>João Almeida</td>
+			            		<td>joao</td>
+			            		<td>joao@gmail.com</td>
+			            		<td>14/01/2015 08:25 PM</td>
+			            	</tr>
+			            	<tr>
+			            		<td>3</td>
+			            		<td>Rafael Pereira</td>
+			            		<td>rafael</td>
+			            		<td>rafael@gmail.com</td>
+			            		<td>28/09/2014 07:13 PM</td>
+			            	</tr>
+			            	<tr>
+			            		<td>4</td>
+			            		<td>Rodrigo Candido</td>
+			            		<td>rodrigo</td>
+			            		<td>rodrigo@gmail.com</td>
+			            		<td>02/11/2014 10:46 PM</td>
+			            	</tr>
+			            	<tr>
+			            		<td>5</td>
+			            		<td>Alexandre Barbosa</td>
+			            		<td>alexandre</td>
+			            		<td>alexandre@gmail.com</td>
+			            		<td>19/08/2013 12:49 PM</td>
+			            	</tr>
+			            </tbody>
+					</table>
+				</div>
+				<div class="span1"></div>
+			</div>
+			
+			<!-- modal create user -->
+			<div id="create" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				  <h3>Modal header</h3>
+				</div>
+				
+				<div class="modal-body">
+				  <p>One fine body…</p>
+				</div>
+				
+				<div class="modal-footer">
+				  <a href="#" class="btn">Close</a>
+				  <a href="#" class="btn btn-primary">Save changes</a>
+				</div>
+			</div>
+			<!-- /modal create user -->
+			
+			<hr>
+			
+			<footer>
+			  <p>&copy; All rights reserved 2015</p>
+			</footer>
+			
+		</div> <!-- /container -->
+	
+		<!-- Le javascript
+	    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+    	<script src="./../../assets/js/jquery-1.11.2.min.js"></script>
+    	<script src="./../../assets/js/bootstrap.min.js"></script>
+    	<script src="./../../assets/js/bootstrap-modal.js"></script>
+    	<script>
+    		$("#create").modal();
+		</script>
+	</body>
+</html>

@@ -188,7 +188,6 @@
 		</dependency>
 	</dependencies>
 	
-	
 	<build>
 		<finalName>usermanagement</finalName>
 		<plugins>
