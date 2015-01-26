@@ -1,5 +1,6 @@
 package com.odesk.model;
 
+import java.io.IOException;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig.Feature;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
 /**
  * A model object for Clients.
  * @author Paulo Franca
@@ -20,7 +26,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "CLIENT")
-public class Client {
+public class Client implements Jsonable {
 	public static final int MAX_LENGTH_NAME = 20;
 	
 	@Id
@@ -33,7 +39,7 @@ public class Client {
 	@Column(name = "ACTIVE")
 	private boolean active;
 	
-	@OneToMany(mappedBy = "CLIENT_ID", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "id", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	private Set<Form> forms;
 	
 	@Version
@@ -85,5 +91,18 @@ public class Client {
 		public Client build() {
 			return built;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String toJSON() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
+		mapper.enable(Feature.INDENT_OUTPUT);
+
+		return mapper.writeValueAsString(this);
 	}
 }

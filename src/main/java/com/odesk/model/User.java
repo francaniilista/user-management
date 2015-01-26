@@ -25,6 +25,7 @@ import org.codehaus.jackson.map.SerializationConfig.Feature;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 /**
  * A model object for users.
  * @author Paulo Franca

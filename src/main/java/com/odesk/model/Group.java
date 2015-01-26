@@ -1,5 +1,6 @@
 package com.odesk.model;
 
+import java.io.IOException;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,13 +15,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig.Feature;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
 /**
  * A model object for Groups.
  * @author Paulo Franca
  */
 @Entity
 @Table(name = "GROUP")
-public class Group {
+public class Group implements Jsonable {
 	public static final int MAX_LENGTH_NAME = 20;
 	
 	@Id
@@ -108,5 +114,18 @@ public class Group {
 		public Group build() {
 			return built;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String toJSON() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
+		mapper.enable(Feature.INDENT_OUTPUT);
+
+		return mapper.writeValueAsString(this);
 	}
 }

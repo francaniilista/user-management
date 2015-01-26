@@ -1,5 +1,6 @@
 package com.odesk.model;
 
+import java.io.IOException;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -13,6 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig.Feature;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
 /**
  * A model object for forms.
  * @author paulo.franca
@@ -20,12 +26,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "FORM")
-public class Form {
+public class Form implements Jsonable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@ManyToOne(targetEntity = Class.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Client.class, fetch = FetchType.LAZY)
 	private Client clients;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -46,5 +52,18 @@ public class Form {
 
 	public Set<Group> getGroups() {
 		return groups;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String toJSON() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
+		mapper.enable(Feature.INDENT_OUTPUT);
+
+		return mapper.writeValueAsString(this);
 	}
 }

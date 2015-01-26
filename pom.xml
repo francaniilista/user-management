@@ -4,7 +4,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.odesk</groupId>
-	<artifactId>UserManagement</artifactId>
+	<artifactId>user-management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>User Management Application</name>
@@ -19,6 +19,17 @@
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<spring.data.version>1.2.0.RELEASE</spring.data.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<basedir>C:/Temp/workspace/user-management</basedir>
+		<liquibase-maven-plugin.version>3.3.2</liquibase-maven-plugin.version>
+		<liquibase.verbose>true</liquibase.verbose>
+		<liquibase.driver>org.h2.Driver</liquibase.driver>
+		<liquibase.dropFirst>false</liquibase.dropFirst>
+		<liquibase.promptOnNonLocalDatabase>false</liquibase.promptOnNonLocalDatabase>
+		<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
+		<liquibase.url>jdbc:h2:mem:datajpa</liquibase.url>
+		<liquibase.username>sa</liquibase.username>
+		<liquibase.password></liquibase.password>
+		<liquibase.contexts>local</liquibase.contexts>
 	</properties>
 	
 	
@@ -189,8 +200,38 @@
 	</dependencies>
 	
 	<build>
-		<finalName>usermanagement</finalName>
+		<finalName>user-management</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>${liquibase-maven-plugin.version}</version>
+	
+				<configuration>
+					<changeLogFile>${basedir}/src/main/resources/db.init.xml</changeLogFile>
+					<verbose>${liquibase.verbose}</verbose>
+					<dropFirst>${liquibase.dropFirst}</dropFirst>
+					<promptOnNonLocalDatabase>${liquibase.promptOnNonLocalDatabase}</promptOnNonLocalDatabase>
+					<driver>${liquibase.driver}</driver>
+				</configuration>
+	
+				<executions>
+					<execution>
+						<id>liquibase-install</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>update</goal>
+						</goals>
+						<configuration>
+							<url>${liquibase.url}</url>
+							<username>${liquibase.username}</username>
+							<password>${liquibase.password}</password>
+							<contexts>${liquibase.contexts}</contexts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -211,6 +252,17 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/user-management</contextPath>
+					</webApp>
+					<classesDirectory>${basedir}/target/classes</classesDirectory>
+					<scanTargets>
+						<scanTarget>${basedir}/src/main/resources/application.properties</scanTarget>
+						<scanTarget>${basedir}/src/main/resources/log4j.properties</scanTarget>
+					</scanTargets>
+				</configuration>
 				<version>8.1.5.v20120716</version>
 			</plugin>
 			<plugin>
