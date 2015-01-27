@@ -152,7 +152,7 @@ public class ApplicationContext extends WebMvcConfigurerAdapter {
 
         Properties exceptionMappings = new Properties();
 
-        exceptionMappings.put("com.packtpub.springdata.jpa.service.NotFoundException", "error/404");
+        exceptionMappings.put("javassist.NotFoundException", "error/404");
         exceptionMappings.put("java.lang.Exception", "error/error");
         exceptionMappings.put("java.lang.RuntimeException", "error/error");
 

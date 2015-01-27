@@ -1,0 +1,34 @@
+// Author: Paulo Franca <francaniilista@gmail.com>
+require.config({
+	paths : {
+		'jquery'     : 'assets/jquery-1.11.2.min',
+		'underscore' : 'assets/underscore-min',
+		'text'       : 'assets/text',
+		'backbone'   : 'assets/backbone-optamd3-min',
+		'bootstrap'  : 'assets/bootstrap-min',
+		'require'    : 'assets/require.min',
+		'bootstrap'  : 'assets/bootstrap',
+		'templates'  : 'templates'
+	},
+	
+	shim:  {
+		"jquery": {
+			exports: "$"
+		},
+		"underscore": {
+			exports: "_"
+		},
+		"backbone": {
+			deps: ["jquery", "underscore"],
+			exports: "Backbone"
+		},
+		"bootstrap": {
+			deps: ["jquery"],
+			exports: "Bootstrap"
+		}
+	}
+});
+
+require([ 'app' ], function(App) {
+	App.initialize();
+});
