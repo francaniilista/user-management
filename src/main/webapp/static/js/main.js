@@ -1,14 +1,13 @@
 // Author: Paulo Franca <francaniilista@gmail.com>
 require.config({
 	paths : {
-		'jquery'     : 'assets/jquery-1.11.2.min',
-		'underscore' : 'assets/underscore-min',
-		'text'       : 'assets/text',
-		'backbone'   : 'assets/backbone-optamd3-min',
-		'bootstrap'  : 'assets/bootstrap-min',
-		'require'    : 'assets/require.min',
-		'bootstrap'  : 'assets/bootstrap',
-		'templates'  : 'templates'
+		jquery     : 'assets/jquery-1.11.2.min',
+		underscore : 'assets/underscore-min',
+		text       : 'assets/text',
+		backbone   : 'assets/backbone-optamd3-min',
+		bootstrap  : 'assets/bootstrap.min', 
+		require    : 'assets/require.min',
+		templates  : 'templates'
 	},
 	
 	shim:  {
@@ -23,8 +22,7 @@ require.config({
 			exports: "Backbone"
 		},
 		"bootstrap": {
-			deps: ["jquery"],
-			exports: "Bootstrap"
+			deps: ["jquery"]
 		}
 	}
 });

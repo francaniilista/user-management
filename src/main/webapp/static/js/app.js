@@ -6,8 +6,7 @@ define([ 'jquery', 'underscore', 'backbone', 'router' ],
 		this.router = {};
 		
 		this.initialize = function() {
-			
-		this.router = new Router();
+			this.router = new Router();
 		}
 	});
 	return App;

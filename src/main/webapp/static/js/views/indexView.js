@@ -3,7 +3,6 @@ define(['backbone', 'text!../templates/home.html'],
 		function(Backbone, HomeViewTemplate) {
 	
 	'use strict';
-	
 	var IndexView = Backbone.View.extend({
 		
 		el: '#main',
