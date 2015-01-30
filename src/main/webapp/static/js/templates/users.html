@@ -7,7 +7,7 @@
 	</div>
 	<div class="span2 offset1">
 		<!-- Button to trigger modal -->
-		<button id="btnCreate" type="button" class="btn btn-primary" data-toggle="modal">Create user</button>
+		<button id="btnOpenCreateUser" type="button" class="btn btn-primary" data-toggle="modal">Create user</button>
 	 </div>
 </div>
 <div class="row">
@@ -16,7 +16,7 @@
 		<form class="navbar-form pull-left">
 			<div class="input-append">
 				<input type="text" class="span3">
-				<button class="btn" type="button">Search</button>	
+				<button id="btnSearch" class="btn" type="button">Search</button>	
 			</div>
 		</form>
 	</div>
@@ -35,42 +35,7 @@
 	                <th>Last Session</th>
 				</tr>
             </thead>
-            <tbody>
-            	<tr>
-            		<td>1</td>
-            		<td>Paulo Franca</td>
-            		<td>paulo</td>
-            		<td>paulo@gmail.com</td>
-            		<td>Never logged in</td>
-            	</tr>
-            	<tr>
-            		<td>2</td>
-            		<td>João Almeida</td>
-            		<td>joao</td>
-            		<td>joao@gmail.com</td>
-            		<td>14/01/2015 08:25 PM</td>
-            	</tr>
-            	<tr>
-            		<td>3</td>
-            		<td>Rafael Pereira</td>
-            		<td>rafael</td>
-            		<td>rafael@gmail.com</td>
-            		<td>28/09/2014 07:13 PM</td>
-            	</tr>
-            	<tr>
-            		<td>4</td>
-            		<td>Rodrigo Candido</td>
-            		<td>rodrigo</td>
-            		<td>rodrigo@gmail.com</td>
-            		<td>02/11/2014 10:46 PM</td>
-            	</tr>
-            	<tr>
-            		<td>5</td>
-            		<td>Alexandre Barbosa</td>
-            		<td>alexandre</td>
-            		<td>alexandre@gmail.com</td>
-            		<td>19/08/2013 12:49 PM</td>
-            	</tr>
+            <tbody id="rows">
             </tbody>
 		</table>
 	</div>
@@ -78,7 +43,7 @@
 </div>
 
 <!-- modal create user -->
-<div id="create" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modalCreate" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	  <h3>Create User</h3>
@@ -110,8 +75,8 @@
 	</div>
 	
 	<div class="modal-footer">
-	  <a href="#" class="btn btn-primary">Create user</a>
-	  <a href="#" class="btn">Cancel</a>
+	  <button id="btnCreateUser" type="button" class="btn btn-primary">Create user</button>
+	  <button id="btnCancel" class="btn">Cancel</button>
 	  
 	</div>
 </div>

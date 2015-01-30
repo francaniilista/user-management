@@ -18,6 +18,9 @@ define(['backbone', 'text!../templates/home.html'],
 		},
 		
 		render: function() {
+			$(document).attr("title", "Dashboard | User Management");
+			$('#dashboard').addClass("active");
+			$('#users').removeClass("active");
 			$(this.el).html(this.template);
 			return this;
 		}

@@ -1,5 +1,7 @@
 package com.odesk.controller;
 
+import java.util.List;
+
 import javassist.NotFoundException;
 
 import javax.annotation.Resource;
@@ -33,6 +35,17 @@ public class UserController {
 	@Resource	
 	private UserService service;
 
+	@RequestMapping(value = "",  method = RequestMethod.GET)
+	@ResponseBody
+	public final List<User> get() throws NotFoundException {
+		LOGGER.debug("Getting all users");
+		
+		List<User> found = service.findAll();
+		LOGGER.debug("Found users");
+		
+		return found; 
+	}
+	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public final User get(@PathVariable("id") final String id) throws NotFoundException {

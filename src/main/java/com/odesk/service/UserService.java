@@ -1,5 +1,7 @@
 package com.odesk.service;
 
+import java.util.List;
+
 import javassist.NotFoundException;
 
 import javax.annotation.Resource;
@@ -36,6 +38,22 @@ public class UserService {
 					.build();
 
         return repository.save(user);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<User> findAll() throws NotFoundException {
+		LOGGER.debug("Finding all users...");
+		
+		List<User> users = repository.findAll();
+		
+		if (users == null) {
+			LOGGER.debug("No user found");
+            throw new NotFoundException("No user found");
+		}
+		
+		LOGGER.debug("Found users");
+
+		return users;
 	}
 	
 	@Transactional(readOnly = true)
