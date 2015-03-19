@@ -15,9 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * A model object for forms.
@@ -26,7 +28,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  */
 @Entity
 @Table(name = "FORM")
-public class Form implements Jsonable {
+@JsonInclude(Include.NON_NULL)
+public class Form {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -36,8 +39,8 @@ public class Form implements Jsonable {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "FORM_GROUP", 
-		joinColumns = { @JoinColumn(columnDefinition = "GROUP_ID", nullable = false, updatable = true) },
-		inverseJoinColumns = { @JoinColumn(columnDefinition = "FORM_ID", nullable = false, updatable = true) })
+		joinColumns = { @JoinColumn(name = "GROUP_ID", nullable = false, updatable = true) },
+		inverseJoinColumns = { @JoinColumn(name = "FORM_ID", nullable = false, updatable = true) })
 	private Set<Group> groups;
 
 	public Form() {}
@@ -61,8 +64,7 @@ public class Form implements Jsonable {
 
 	public String toJSON() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(Inclusion.NON_NULL);
-		mapper.enable(Feature.INDENT_OUTPUT);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 		return mapper.writeValueAsString(this);
 	}

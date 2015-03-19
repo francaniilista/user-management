@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.sitemesh.config.ConfigurableSiteMeshFilter;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -31,7 +32,7 @@ public class AppInitializer implements WebApplicationInitializer {
 		// Loading application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.register(ApplicationContext.class);
-
+		
 		// Dispatcher servlet
 		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(rootContext));
 		dispatcher.setLoadOnStartup(1);
@@ -41,7 +42,13 @@ public class AppInitializer implements WebApplicationInitializer {
 		FilterRegistration.Dynamic sitemesh = servletContext.addFilter("sitemesh", new ConfigurableSiteMeshFilter());
 		EnumSet<DispatcherType> sitemeshDispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 		sitemesh.addMappingForUrlPatterns(sitemeshDispatcherTypes, true, "*.jsp");
-
+		
+		registerOpenEntityManagerInViewFilter(servletContext);
 		servletContext.addListener(new ContextLoaderListener(rootContext));
+	}
+	
+	private void registerOpenEntityManagerInViewFilter(ServletContext servletContext) {
+		FilterRegistration.Dynamic registration = servletContext.addFilter("openEntityManagerInView", new OpenEntityManagerInViewFilter());
+		registration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false, "/*");
 	}
 }

@@ -12,12 +12,15 @@ define(['backbone', 'underscore', 'text!../templates/user/tableRowUser.html', 'b
 		
 		initialize: function(collection) {
 			this.users = collection;
+			this.listenTo(this.users, 'add reset remove', this.render);
 		},
 		
 		render: function() {
 			console.log("Rendering Table row...");
-			this.template({users: this.users});
-			return $(this.el).html(this.template);
+			if (this.users.size() > 0) {
+				$(this.el).html(this.template({users: this.users}));
+			}
+			return $(this.el);
 		}
 	});
 	

@@ -4,7 +4,7 @@ require.config({
 		jquery     : 'assets/jquery-1.11.2.min',
 		underscore : 'assets/underscore-min',
 		text       : 'assets/text',
-		backbone   : 'assets/backbone-optamd3-min',
+		backbone   : 'assets/backbone-min',
 		bootstrap  : 'assets/bootstrap.min', 
 		require    : 'assets/require.min',
 		templates  : 'templates'

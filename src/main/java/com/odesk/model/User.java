@@ -2,9 +2,10 @@ package com.odesk.model;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,10 +21,13 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 
 /**
@@ -31,8 +35,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Paulo Franca
  */
 @Entity
-@Table(name = "USER")
-public class User implements Jsonable {
+@Table(name = "USERS")
+@JsonInclude(Include.NON_NULL)
+public class User {
 	public static final int MAX_LENGTH_USERNAME = 20;
 	public static final int MAX_LENGTH_PASSWORD = 10;
 	public static final int MAX_LENGTH_EMAIL_ADDRESS = 100;
@@ -58,11 +63,11 @@ public class User implements Jsonable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar createTime;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_GROUP", 
-		joinColumns = { @JoinColumn(columnDefinition = "GROUP_ID", nullable = false, updatable = true) },
-		inverseJoinColumns = { @JoinColumn(columnDefinition = "USER_ID", nullable = false, updatable = true) })
-	private Set<Group> groups;
+		joinColumns = { @JoinColumn(name = "USER_ID", nullable = true, updatable = true) },
+		inverseJoinColumns = { @JoinColumn(name = "GROUP_ID", nullable = true, updatable = true) })
+	private Set<Group> groups = new HashSet<Group>(0);
 
 	@Version
 	private long version;
@@ -136,7 +141,9 @@ public class User implements Jsonable {
 		}
 		
 		public Builder groups(Set<Group> groups) {
-			built.groups.addAll(groups);
+			if (groups != null) {
+				built.groups.addAll(groups);
+			}
 			return this;
 		}
 		
@@ -153,8 +160,7 @@ public class User implements Jsonable {
 
 	public String toJSON() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(Inclusion.NON_NULL);
-		mapper.enable(Feature.INDENT_OUTPUT);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 		return mapper.writeValueAsString(this);
 	}

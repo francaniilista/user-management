@@ -15,9 +15,11 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * A model object for Clients.
@@ -26,7 +28,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  */
 @Entity
 @Table(name = "CLIENT")
-public class Client implements Jsonable {
+@JsonInclude(Include.NON_NULL)
+public class Client {
 	public static final int MAX_LENGTH_NAME = 20;
 	
 	@Id
@@ -100,9 +103,9 @@ public class Client implements Jsonable {
 
 	public String toJSON() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(Inclusion.NON_NULL);
-		mapper.enable(Feature.INDENT_OUTPUT);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 		return mapper.writeValueAsString(this);
 	}
+
 }

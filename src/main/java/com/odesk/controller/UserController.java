@@ -35,7 +35,7 @@ public class UserController {
 	@Resource	
 	private UserService service;
 
-	@RequestMapping(value = "",  method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public final List<User> get() throws NotFoundException {
 		LOGGER.debug("Getting all users");
@@ -46,7 +46,7 @@ public class UserController {
 		return found; 
 	}
 	
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public final User get(@PathVariable("id") final String id) throws NotFoundException {
 		LOGGER.debug("Getting user with id: " + id);
@@ -69,12 +69,12 @@ public class UserController {
 		return created;
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@RequestBody User user, @PathVariable String id) {
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	public void remove(@PathVariable String id) {
 	}

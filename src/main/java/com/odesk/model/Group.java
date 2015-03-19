@@ -1,6 +1,7 @@
 package com.odesk.model;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,17 +17,20 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * A model object for Groups.
  * @author Paulo Franca
  */
 @Entity
-@Table(name = "GROUP")
-public class Group implements Jsonable {
+@Table(name = "GROUPS")
+@JsonInclude(Include.NON_NULL)
+public class Group {
 	public static final int MAX_LENGTH_NAME = 20;
 	
 	@Id
@@ -40,16 +44,19 @@ public class Group implements Jsonable {
 	private boolean active;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "USER_GROUP", 
-		joinColumns = { @JoinColumn(columnDefinition = "GROUP_ID", nullable = false, updatable = true) },
-		inverseJoinColumns = { @JoinColumn(columnDefinition = "USER_ID", nullable = false, updatable = true) })
+	@JoinTable(name = "CLIENT_GROUP", 
+		joinColumns = { @JoinColumn(name = "GROUP_ID", nullable = false, updatable = true) },
+		inverseJoinColumns = { @JoinColumn(name = "CLIENT_ID", nullable = false, updatable = true) })
 	private Set<Client> clients;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "FORM_GROUP", 
-		joinColumns = { @JoinColumn(columnDefinition = "GROUP_ID", nullable = false, updatable = true) },
-		inverseJoinColumns = { @JoinColumn(columnDefinition = "FORM_ID", nullable = false, updatable = true) })
+		joinColumns = { @JoinColumn(name = "GROUP_ID", nullable = false, updatable = true) },
+		inverseJoinColumns = { @JoinColumn(name = "FORM_ID", nullable = false, updatable = true) })
 	private Set<Form> forms;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+	private Set<User> users = new HashSet<User>(0);
 	
 	@Version
 	private long version;
@@ -74,6 +81,10 @@ public class Group implements Jsonable {
 	
 	public Set<Form> getForms() {
 		return forms;
+	}
+
+	public Set<User> getUsers() {
+		return users;
 	}
 
 	public long getVersion() {
@@ -123,8 +134,7 @@ public class Group implements Jsonable {
 
 	public String toJSON() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(Inclusion.NON_NULL);
-		mapper.enable(Feature.INDENT_OUTPUT);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 		return mapper.writeValueAsString(this);
 	}
